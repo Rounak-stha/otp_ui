@@ -1,4 +1,4 @@
-# OTO Code Validation Page
+# OTP Code Validation Page
 
 A simple application with a page which allows user to input six digit OTP code as part of user verification flow.
 
