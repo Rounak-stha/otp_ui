@@ -11,6 +11,7 @@ A simple application with a page which allows user to input six digit OTP code a
 
 -   Subsequent input fields autofocus on user input
 -   Useful messages on error
+-   Paste the code from clipboard
 
 ## Installation
 
