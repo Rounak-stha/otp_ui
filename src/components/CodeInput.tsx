@@ -31,4 +31,5 @@ const CodeInput = forwardRef(
 	}
 )
 
+CodeInput.displayName = 'CodeInput'
 export default CodeInput
