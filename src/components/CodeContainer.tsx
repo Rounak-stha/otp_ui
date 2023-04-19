@@ -6,7 +6,8 @@ import { toast } from 'react-hot-toast'
 
 export default function CodeContainer() {
 	const [otp, setOtp] = useState<string[]>(new Array(6).fill(''))
-	const [activeInput, setActiveInput] = useState<number>(0)
+	const [activeInput, setActiveInput] = useState(0)
+	const [verifying, setVerifying] = useState(false)
 	const activeInputRef = useRef<HTMLInputElement>(null)
 
 	const router = useRouter()
@@ -43,12 +44,14 @@ export default function CodeContainer() {
 	}
 
 	async function handleSubmit() {
+		setVerifying(true)
 		const res = await fetch('/api/otp', {
 			method: 'POST',
 			body: JSON.stringify({ code: otp.join('') })
 		})
 		if (res.status === 200) router.push('/success')
 		else toast((await res.json()).msg)
+		setVerifying(false)
 	}
 	return (
 		<div className='p-4 flex flex-col gap-4 justify-center items-center mb-40'>
@@ -65,7 +68,7 @@ export default function CodeContainer() {
 					/>
 				))}
 			</div>
-			<Button onClick={handleSubmit} text='Submit' />
+			<Button onClick={handleSubmit} text='Submit' loading={verifying} />
 		</div>
 	)
 }
