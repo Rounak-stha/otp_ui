@@ -37,10 +37,12 @@ export default function CodeContainer() {
 		}
 	}
 
-	function handlePaste(e: React.ClipboardEvent<HTMLInputElement>): void {
+	function handlePaste(e: React.ClipboardEvent<HTMLDivElement>): void {
 		// BUG: If oneof the inputsis focused, only the last character is pasted in the input
 		const text = e.clipboardData.getData('text').slice(0, 6)
-		setOtp(text.split(''))
+		const newOtp = [...otp]
+		text.split('').forEach((c, i) => (newOtp[i] = c))
+		setOtp(newOtp)
 	}
 
 	async function handleSubmit() {
@@ -54,14 +56,13 @@ export default function CodeContainer() {
 		setVerifying(false)
 	}
 	return (
-		<div className='p-4 flex flex-col gap-4 justify-center items-center mb-40'>
+		<div onPaste={handlePaste} className='p-4 flex flex-col gap-4 justify-center items-center mb-40'>
 			<p className='font-bold text-lg'>Enter Your Code</p>
 			<div className='flex gap-2'>
 				{otp.map((val, index) => (
 					<CodeInput
 						key={index} // using index as key is fine here
 						ref={activeInput === index ? activeInputRef : null}
-						onPaste={handlePaste}
 						onChange={(newValue: string) => handleChange(newValue, index)}
 						onKeyDown={(e) => handleKeyDown(e, index)}
 						value={val}

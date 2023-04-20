@@ -4,11 +4,10 @@ interface Props {
 	value: string
 	onChange: (val: string) => void
 	onKeyDown: (e: React.KeyboardEvent<HTMLInputElement>) => void
-	onPaste: (e: React.ClipboardEvent<HTMLInputElement>) => void
 }
 
 const CodeInput = forwardRef(
-	({ value, onChange, onKeyDown, onPaste }: Props, ref: React.ForwardedRef<HTMLInputElement> | null) => {
+	({ value, onChange, onKeyDown }: Props, ref: React.ForwardedRef<HTMLInputElement> | null) => {
 		function handleChange(e: React.ChangeEvent<HTMLInputElement>): void {
 			onChange(e.target.value.slice(-1))
 		}
@@ -17,7 +16,6 @@ const CodeInput = forwardRef(
 		}
 		return (
 			<input
-				onPaste={onPaste}
 				ref={ref}
 				value={value}
 				onChange={handleChange}
